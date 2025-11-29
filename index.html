@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SecureFile Zero</title>
+
+  <link rel="icon" type="image/png" sizes="512x512" href="lock-icon.png">
+  <link rel="apple-touch-icon" href="lock-icon.png">
+  <meta name="theme-color" content="#020617">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/zxcvbn@4.4.2/dist/zxcvbn.js"></script>
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo-wrap">
+        <div class="logo-circle">
+          <img src="lock-icon.png" alt="Lock icon">
+        </div>
+        <div>
+          <h1 class="title">
+            SecureFile <span class="year">Zero</span>
+          </h1>
+          <p class="tagline">
+            Zero-trust, client-side file encryption
+          </p>
+          <p class="tagline tech">
+            AES-256-GCM · PBKDF2-HMAC-SHA-256
+          </p>
+        </div>
+      </div>
+
+      <div class="pill-row">
+        <span class="pill">Self-decrypting HTML</span>
+        <span class="pill">Offline PWA</span>
+        <span class="pill">Password never leaves browser</span>
+      </div>
+    </header>
+
+    <div id="drop">Drop file here or click to choose</div>
+    <input id="file" type="file" style="display:none">
+
+    <div class="label">Password</div>
+    <input id="pass" type="password" placeholder="Use a long, unique passphrase">
+
+    <div id="meter"><div id="bar"></div></div>
+    <p id="strengthText" class="small">Password strength: –</p>
+    <p id="strengthDetail" class="small"></p>
+
+    <div class="label">Key derivation strength</div>
+    <div class="kdf-row">
+      <label><input type="radio" name="kdf" value="normal" checked> Normal (~200k)</label>
+      <label><input type="radio" name="kdf" value="strong"> Strong (~800k)</label>
+      <label><input type="radio" name="kdf" value="paranoid"> Paranoid (~2M)</label>
+    </div>
+    <p id="kdfTime" class="small">
+      Key derivation time will be measured on first run.
+    </p>
+
+    <div class="buttons">
+      <button id="enc" disabled>Encrypt</button>
+      <button id="dec" disabled>Decrypt</button>
+      <button id="sfx" disabled>Self-decrypting HTML</button>
+    </div>
+
+    <div id="status">SecureFile Zero ready.</div>
+    <div id="prog">
+      <div id="fill"></div>
+      <span id="ptext"></span>
+    </div>
+
+    <p class="author">NVBugTide – PRISE 2024</p>
+  </div>
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js").catch(() => {});
+    }
+  </script>
+</body>
+</html>
